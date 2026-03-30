@@ -4,12 +4,12 @@
 # members : Xavier Subratie   (2509139) - project lead, architecture
 #           Ethan Eubanks     (2509775) - lead dev (core logic)
 #           Rodaine Wuarrie   (2409674) - dev (data & validation)
-#           Rajali Burrell    (2403230) - QA & Testing lead
+#           Rajali Burrell    (2007948) - QA & Testing lead
 #           Mikayliea Edwards (2403230) - documentation lead
 #           David Maxwell     (insert your id here, david) - presentation & demo lead
 
 # main data structure ~ holds everything, list of directories.
-students_data []
+students_data [23]
 
 # --- data & validation functions (Rodaine Quarrie) ---
 # TODO: add_student(name, student_id)
