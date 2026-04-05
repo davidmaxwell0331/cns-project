@@ -11,29 +11,34 @@
 # main data structure ~ holds everything, list of directories.
 students_data []
 
-# --- data & validation functions (Rodaine Quarrie) ---
-# TODO: add_student(name, student_id)
-# TODO: add_grade(student_id, subject, score)
-# TODO: update_grade(student_id, subject, new_score)
-# TODO: validate_input(prompt, input_type, min_val, max_val)
+def display_menu():
+    """Displays the main menu options to the user."""
+    print("\n--- Student Grade Tracker ---")
+    print("1. Add Student")
+    print("2. Add Grade")
+    print("3. Calculate Average")
+    print("4. Student Report")
+    print("5. Class Report")
+    print("6. Search Student")
+    print("7. Class Summary")
+    print("8. Save Data")
+    print("9. Load Data")
+    print("0. Exit")
 
-# --- core logic functions (Ethan Eubanks) ---
-# TODO: display_menu()
-# TODO: calculate_average(student)
-# TODO: assign_letter_grade(average)
-# TODO: display_student_report(student_id)
+def main():
+    """the main loop of the program"""
+    print("Welcome to the Student Grade Tracker!")
+    
+    while True:
+        display_menu()
+        choice = input("Enter choice: ")
+        
+        if choice == '0':
+            print("Exiting program. Goodbye!")
+            break
+        else:
+            # Placeholder for future functions
+            print(f"Option {choice} is not yet implemented.")
 
-# --- search & utility functions (Xavier Subratie) ---
-# TODO: search_student(query)
-# TODO: class_summary()
-
-# --- file handing functions (David Maxwell) ---
-# TODO: save_to_file(filename)
-# TODO: load_from_file(filename)
-
-# --- main function (Ethan Eubanks) ---
-# TODO: main()
-
-# --- Program Entry Point ---
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
