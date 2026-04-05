@@ -1,8 +1,8 @@
-CNS 1001 Project 2 ; Inventory & Sales Tracker
+# CNS 1001 Project 2 ; Inventory & Sales Tracker
 
-# Project Title
+## (a) Project Title
 
-# Student Information
+## (b) Student Information
 Xavier Subratie (2509139) - **Project Lead, Architecture**
 Ethan Eubanks (2509775) - **Lead Developer (Core Logic)**
 Rodaine Wuarrie (2409674) - **Developer (Data & Validation)**
@@ -11,15 +11,15 @@ Mikayliea Edwards (2403230) - **Documentation Lead**
 David Maxwell (n/a) - **Presentation & Demo Lead**
 (course ; CNS1001 - Introduction to Programming)
 
-# Problem Statement 
+## (c) Problem Statement 
 
 The problem I wanted to solve is essentially how small businesss track their sales without buying expensive software. Alot of small shops typically track sales by hand, making it hard to calculate the sales averages or see what products are even selling. This simple program gives a very simple way to log products, record monthly sales as well as automatically see the performance ratings without doing much or any manual math.
 
-# Program Description
+# (d) Program Description
 
 A text-based python menu with 10 options to choose from. It stores the products in a dictionary list (SKU, holding name, nested dictionary w/ monthly sales). Users can add products, log their sales, calculate averages, search for items, view formatted tables and save or load data to a JSON file so nothing is lost whenever the program is closed.
 
-# Programming Concepts used
+# (e) Programming Concepts used
 
 Variables & I/O: Storing user inputs and printing menus.
 Conditionals: Routing the menu and calculating performance ratings (Excellent, Good, Average, Low).
@@ -30,16 +30,62 @@ File Handling: Using built-in json module to save/load data.
 String Formatting: f-strings and padding (<15) to align table columns.
 Validation & Exceptions: get_valid_input() blocks bad data; try/except handles missing save files.
 
-# How to Run the Program
+## (f) How to Run the Program
 1. Open your terminal in the folder **project.py**
 2. Run **python project.py**
 3. Follow the **numbered menu**. Press 0 to exit.
 
-# Required Libraries
+## (g) Required Libraries
 No libraries required as python is built-in the file.
 
-# Sample Inputs and Outputs
+## (h) Sample Inputs and Outputs
 
-Logging sales and adding a product: 
+**Adding a product and logging sales:**
+```text
+Enter choice: 1
+Enter product name: Keyboard
+Enter product SKU: KB-001
+Product 'Keyboard' (SKU: KB-001) added successfully.
 
-Enter choice: 1Enter product name: Mechanical KeyboardEnter product SKU: KB-001Product 'Mechanical Keyboard' (SKU: KB-001) added successfully.Enter choice: 2Enter product name or SKU: KB-001Enter month (e.g., Jan, Feb): JanEnter units sold: 120Recorded 120 units sold for Jan.
+Enter choice: 2
+Enter product name or SKU: KB-001
+Enter month (e.g., Jan, Feb): Jan
+Enter units sold: 120
+Recorded 120 units sold for Jan.
+```
+
+**Viewing the full inventory table:**
+```text
+Enter choice: 5
+======= Full Warehouse View =======
+Product         | SKU      | Avg Sales     | Status
+----------------------------------------------------
+Keyboard        | KB-001   | 120.00        | Excellent
+----------------------------------------------------
+Total Items: 1 | Store Average: 120.00
+======================================
+```
+
+## (i) Manual Testing / Validation
+
+| Test Case | Input | Expected Output | Actual Output | Pass/Fail |
+|---|---|---|---|---|
+| Add new product | Choice: 1, Name: Mouse, SKU: M-01 | Product added successfully | Product 'Mouse' (SKU: M-01) added successfully. | Pass |
+| Duplicate SKU | Choice: 1, SKU: M-01 again | Error message | Error: A product with SKU 'M-01' already exists. | Pass |
+| Negative sales input | Choice: 2, Units: -5 | Validation error | Value must be at least 0. | Pass |
+| Invalid menu choice | Choice: abc | Error message | Invalid option. Please enter a number from the menu. | Pass |
+| Load with no save file | Choice: 9 (no file exists) | Graceful failure message | No saved data found. | Pass |
+
+## (j) Challenges and Lessons Learned
+**Challenge 1:** The product search loop was duplicated across multiple functions, making the code difficult to maintain.
+**Fix:** Extracted it into a single `find_product()` helper that every function now calls.
+
+**Challenge 2:** `load_data()` was not updating the main inventory after loading from file.
+**Fix:** Added `global inventory_data` inside the function. Without it, Python treats the assignment as a new local variable and the main list stays empty.
+
+**Lesson:** Small structural decisions early on (like a shared helper function) save significant cleanup time later.
+
+## (k) AI Assistance Disclosure
+**Tool used:** Claude (Anthropic)
+**Purpose:** Debugging the `global` variable issue in `load_data()`, understanding Python string padding for table formatting, and syntax clarification.
+**Validation:** All suggestions were tested manually and understood before being included. All code was written and verified by the group.
