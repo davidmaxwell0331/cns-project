@@ -60,7 +60,7 @@ def add_product():
     name = get_valid_input("Enter product name: ")
     sku = str(get_valid_input("Enter product SKU: "))
     
-    # Check if SKU already exists
+    # checks if sku already exists
     for product in inventory_data:
         if product["sku"] == sku:
             print(f"Error: A product with SKU '{sku}' already exists.")
@@ -121,13 +121,7 @@ def show_product_stats():
         return
         
     search = get_valid_input("Enter product name or SKU: ")
-    matched_item = None
-    
-    # loop through to find what we want
-    for item in inventory_data:
-        if search.lower() == item["name"].lower() or search == item["sku"]:
-            matched_item = item
-            break
+    matched_item = find_product(search)
             
     if matched_item is None:
         print(f"Couldn't find '{search}' in the inventory.")
@@ -172,7 +166,67 @@ def show_full_inventory():
     overall_avg = running_total / len(inventory_data)
     print(f"Total Items: {len(inventory_data)} | Store Average: {overall_avg:.2f}")
     print("=" * 38)
-    
+
+def find_product(search_term):
+    """Finds and returns a product by name or SKU, or None if not found."""
+    for product in inventory_data:
+        if search_term.lower() == product["name"].lower() or search_term == product["sku"]:
+            return product
+    return None
+
+def calculate_average_sales():
+    """Asks for a product and prints its average monthly sales."""
+    print("\n--- Calculate Average Sales ---")
+    if not inventory_data:
+        print("No products found. Please add a product first.")
+        return
+    search = get_valid_input("Enter product name or SKU: ")
+    found = find_product(search)
+    if found:
+        avg = calculate_average(found)
+        print(f"{found['name']}'s Average Monthly Sales: {avg:.2f} units")
+    else:
+        print(f"Product '{search}' not found.")
+
+def search_product():
+    """Searches for a product and shows its info."""
+    print("\n--- Search Product ---")
+    search = get_valid_input("Enter product name or SKU: ")
+    product = find_product(search)
+    if product:
+        print(f"Found: {product['name']} | SKU: {product['sku']} | Sales: {product['sales']}")
+    else:
+        print(f"Product '{search}' not found.")
+
+def inventory_summary():
+    """Prints a quick summary of all products."""
+    print("\n--- Inventory Summary ---")
+    if not inventory_data:
+        print("No products found.")
+        return
+    print(f"Total products: {len(inventory_data)}")
+    for product in inventory_data:
+        avg = calculate_average(product)
+        print(f"  - {product['name']} (SKU: {product['sku']}) | Avg Sales: {avg:.2f}")
+
+def save_data():
+    """Saves inventory data to a file."""
+    import json
+    with open("inventory.json", "w") as f:
+        json.dump(inventory_data, f)
+    print("Data saved to inventory.json")
+
+def load_data():
+    """Loads inventory data from a file."""
+    import json
+    global inventory_data
+    try:
+        with open("inventory.json", "r") as f:
+            inventory_data = json.load(f)
+        print(f"Loaded {len(inventory_data)} product(s).")
+    except FileNotFoundError:
+        print("No saved data found.")
+
 def main():
     """The main loop of the program."""
     print("Welcome to the Inventory & Sales Tracker!")
