@@ -4,12 +4,12 @@
 # members : Xavier Subratie   (2509139) - project lead, architecture
 #           Ethan Eubanks     (2509775) - lead dev (core logic)
 #           Rodaine Wuarrie   (2409674) - dev (data & validation)
-#           Rajali Burrell    (2403230) - QA & Testing lead
+#           Rajali Burrell    (2007948) - QA & Testing lead
 #           Mikayliea Edwards (2403230) - documentation lead
 #           David Maxwell     (insert your id here, david) - presentation & demo lead
 
 # main data structure ~ holds everything, list of directories.
-students_data []
+students_data = []
 
 def display_menu():
     """Displays the main menu options to the user."""
@@ -75,6 +75,34 @@ def add_student():
     students_data.append(new_student)
     print(f"Student '{name}' (ID: {student_id}) added successfully.")
 
+def add_grade():
+    """Adds or updates a grade for an existing student."""
+    print("\n--- Add Grade ---")
+    if not students_data:
+        print("No students found. Please add a student first.")
+        return
+    
+    search_term = get_valid_input("Enter student name or ID: ")
+    student_found = None
+    
+    # Search through our list to find the matching student
+    for student in students_data:
+        if search_term.lower() == student["name"].lower() or search_term == student["id"]:
+            student_found = student
+            break
+            
+    if not student_found:
+        print(f"Student '{search_term}' not found.")
+        return
+        
+    course = get_valid_input("Enter course name: ")
+    # Using our validation function to ensure grade is between 0 and 100
+    grade = get_valid_input("Enter grade (0-100): ", input_type="float", min_val=0, max_val=100)
+    
+    # Save to the student's grades dictionary
+    student_found["grades"][course] = grade
+    print(f"Grade {grade} added for {course}.")
+    
 def main():
     """the main loop of the program"""
     print("Welcome to the Student Grade Tracker!")
@@ -83,11 +111,13 @@ def main():
         display_menu()
         choice = input("Enter choice: ")
         
-         if choice == '0':
+        if choice == '0':
             print("Exiting program. Goodbye!")
             break
         elif choice == '1':
             add_student()
+        elif choice == '2':
+            add_grade()
         else:
             print(f"Option {choice} is not yet implemented.")
 
