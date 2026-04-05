@@ -25,6 +25,56 @@ def display_menu():
     print("9. Load Data")
     print("0. Exit")
 
+def get_valid_input(prompt, input_type="str", min_val=None, max_val=None):
+    """
+    Validates user input based on type and range.
+    input_type: 'str' for text, 'int' or 'float' for numbers
+    """
+    while True:
+        user_input = input(prompt).strip()
+        if not user_input:
+            print("Input cannot be empty. Please try again.")
+            continue
+        
+        if input_type == "str":
+            return user_input
+        elif input_type in ("int", "float"):
+            try:
+                # convertsConvert to float first so it handles both int and float inputs cleanly
+                value = float(user_input) 
+                if input_type == "int" and not user_input.isdigit() and not (user_input.startswith('-') and user_input[1:].isdigit()):
+                    # Extra check to prevent 85.5 being accepted if int was requested
+                    raise ValueError 
+                if min_val is not None and value < min_val:
+                    print(f"Value must be at least {min_val}.")
+                    continue
+                if max_val is not None and value > max_val:
+                    print(f"Value must be at most {max_val}.")
+                    continue
+                return int(value) if input_type == "int" else value
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
+
+def add_student():
+    """Adds a new student to the students_data list."""
+    print("\n--- Add New Student ---")
+    name = get_valid_input("Enter student name: ")
+    student_id = str(get_valid_input("Enter student ID: "))
+    
+    # Check if student ID already exists to prevent duplicates
+    for student in students_data:
+        if student["id"] == student_id:
+            print(f"Error: A student with ID '{student_id}' already exists.")
+            return
+            
+    new_student = {
+        "name": name,
+        "id": student_id,
+        "grades": {}
+    }
+    students_data.append(new_student)
+    print(f"Student '{name}' (ID: {student_id}) added successfully.")
+
 def main():
     """the main loop of the program"""
     print("Welcome to the Student Grade Tracker!")
@@ -33,11 +83,12 @@ def main():
         display_menu()
         choice = input("Enter choice: ")
         
-        if choice == '0':
+         if choice == '0':
             print("Exiting program. Goodbye!")
             break
+        elif choice == '1':
+            add_student()
         else:
-            # Placeholder for future functions
             print(f"Option {choice} is not yet implemented.")
 
 if __name__ == "__main__":
