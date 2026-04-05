@@ -3,23 +3,26 @@
 ## (a) Project Title
 
 ## (b) Student Information
-Xavier Subratie (2509139) - **Project Lead, Architecture**
-Ethan Eubanks (2509775) - **Lead Developer (Core Logic)**
-Rodaine Wuarrie (2409674) - **Developer (Data & Validation)**
-Rajali Burrell (2007948) - **QA & Testing Lead**
-Mikayliea Edwards (2403230) - **Documentation Lead**
-David Maxwell (n/a) - **Presentation & Demo Lead**
+| Name | ID | Role |
+|---|---|---|
+| Xavier Subratie | 2509139 | Project Lead |
+| Ethan Eubanks | 2509775 | Lead Developer |
+| Rodaine Wuarrie | 2409674 | Developer (Data & Validation) |
+| Rajali Burrell | 2007948 | QA & Testing Lead |
+| Mikayliea Edwards | 2403230 | Documentation Lead |
+| David Maxwell | Pending | Presentation Lead |
+
 (course ; CNS1001 - Introduction to Programming)
 
 ## (c) Problem Statement 
 
 The problem I wanted to solve is essentially how small businesss track their sales without buying expensive software. Alot of small shops typically track sales by hand, making it hard to calculate the sales averages or see what products are even selling. This simple program gives a very simple way to log products, record monthly sales as well as automatically see the performance ratings without doing much or any manual math.
 
-# (d) Program Description
+## (d) Program Description
 
 A text-based python menu with 10 options to choose from. It stores the products in a dictionary list (SKU, holding name, nested dictionary w/ monthly sales). Users can add products, log their sales, calculate averages, search for items, view formatted tables and save or load data to a JSON file so nothing is lost whenever the program is closed.
 
-# (e) Programming Concepts used
+## (e) Programming Concepts used
 
 Variables & I/O: Storing user inputs and printing menus.
 Conditionals: Routing the menu and calculating performance ratings (Excellent, Good, Average, Low).
@@ -36,7 +39,7 @@ Validation & Exceptions: get_valid_input() blocks bad data; try/except handles m
 3. Follow the **numbered menu**. Press 0 to exit.
 
 ## (g) Required Libraries
-No libraries required as python is built-in the file.
+No libraries required, python built-in.
 
 ## (h) Sample Inputs and Outputs
 
