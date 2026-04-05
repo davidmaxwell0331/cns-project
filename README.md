@@ -1,6 +1,7 @@
-# CNS 1001 Project 2 ; Inventory & Sales Tracker
+# CNS1001 Project 2: Inventory & Sales Tracker
 
 ## (a) Project Title
+Inventory & Sales Tracker
 
 ## (b) Student Information
 | Name | ID | Role |
