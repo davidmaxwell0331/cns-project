@@ -82,12 +82,7 @@ def add_monthly_sales():
         return
     
     search_term = get_valid_input("Enter product name or SKU: ")
-    product_found = None
-    
-    for product in inventory_data:
-        if search_term.lower() == product["name"].lower() or search_term == product["sku"]:
-            product_found = product
-            break
+    product_found = find_product(search_term)
             
     if not product_found:
         print(f"Product '{search_term}' not found.")
@@ -117,15 +112,75 @@ def get_performance_rating(average):
         return "Average"
     else:
         return "Low"
+
+def show_product_stats():
+    """pulls up the full breakdown for one specific item"""
+    print("\n--- Item Lookup ---")
+    if len(inventory_data) == 0:
+        print("Nothing in the system yet. Go back and add stuff.")
+        return
+        
+    search = get_valid_input("Enter product name or SKU: ")
+    matched_item = None
+    
+    # loop through to find what we want
+    for item in inventory_data:
+        if search.lower() == item["name"].lower() or search == item["sku"]:
+            matched_item = item
+            break
+            
+    if matched_item is None:
+        print(f"Couldn't find '{search}' in the inventory.")
+        return
+        
+    print(f"\n======= Item Breakdown =======")
+    print(f"Product: {matched_item['name']}")
+    print(f"SKU:     {matched_item['sku']}")
+    print("-" * 28)
+    
+    if not matched_item["sales"]:
+        print("No sales recorded for this yet.")
+    else:
+        for month, units in matched_item["sales"].items():
+            print(f"{month:<10}: {units} sold")
+        print("-" * 28)
+        avg = calculate_average(matched_item)
+        rating = get_performance_rating(avg)
+        print(f"Avg Sales: {avg:.2f} units -> Rating: {rating}")
+    print("=" * 28)
+
+def show_full_inventory():
+    """prints out the big table of everything we have"""
+    print("\n======= Full Warehouse View =======")
+    if len(inventory_data) == 0:
+        print("Inventory is totally empty.")
+        return
+        
+    # setting up the table headers
+    print(f"{'Product':<15} | {'SKU':<8} | {'Avg Sales':<12} | {'Status'}")
+    print("-" * 52)
+    
+    running_total = 0
+    for item in inventory_data:
+        avg = calculate_average(item)
+        running_total += avg
+        rating = get_performance_rating(avg)
+        # the <15 and <8 spaces things out so it looks like a table
+        print(f"{item['name']:<15} | {item['sku']:<8} | {avg:<12.2f} | {rating}")
+        
+    print("-" * 52)
+    overall_avg = running_total / len(inventory_data)
+    print(f"Total Items: {len(inventory_data)} | Store Average: {overall_avg:.2f}")
+    print("=" * 38)
     
 def main():
-    """the main loop of the program"""
+    """The main loop of the program."""
     print("Welcome to the Inventory & Sales Tracker!")
-    
+
     while True:
         display_menu()
         choice = input("Enter choice: ")
-        
+
         if choice == '0':
             print("Exiting program. Goodbye!")
             break
@@ -134,22 +189,21 @@ def main():
         elif choice == '2':
             add_monthly_sales()
         elif choice == '3':
-            if not inventory_data:
-                print("No products found. Please add a product first.")
-            else:
-                search = get_valid_input("Enter product name or SKU: ")
-                found = None
-                for product in inventory_data:
-                    if search.lower() == product["name"].lower() or search == product["sku"]:
-                        found = product
-                        break
-                if found:
-                    avg = calculate_average(found)
-                    print(f"{found['name']}'s Average Monthly Sales: {avg:.2f} units")
-                else:
-                    print(f"Product '{search}' not found.")
+            calculate_average_sales()
+        elif choice == '4':
+            show_product_stats()
+        elif choice == '5':
+            show_full_inventory()
+        elif choice == '6':
+            search_product()
+        elif choice == '7':
+            inventory_summary()
+        elif choice == '8':
+            save_data()
+        elif choice == '9':
+            load_data()
         else:
-            print(f"Option {choice} is not yet implemented.")
+            print("Invalid option. Please enter a number from the menu.")
 
 if __name__ == "__main__":
     main()
