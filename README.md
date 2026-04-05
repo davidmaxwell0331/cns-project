@@ -81,9 +81,11 @@ Total Items: 1 | Store Average: 120.00
 
 ## (j) Challenges and Lessons Learned
 **Challenge 1:** The product search loop was duplicated across multiple functions, making the code difficult to maintain.
+
 **our fix;** We extracted it into a single `find_product()` helper that every function now calls.
 
 **Challenge 2:** `load_data()` wasn't updating the main inventory after loading from file.
+
 **our fix;** We added `global inventory_data` inside the function. Without it, Python would be treating the assignment as a new local variable and the main list stays empty.
 
 **Lesson:** small structural decisions early on need to be used, saves significant cleanup time.
